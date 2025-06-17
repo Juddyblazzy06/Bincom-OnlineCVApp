@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OnlineCVApp</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <h1 class="text-center">My Online CV</h1>
+    </header>
+
+    <nav class="text-center mb-4">
+        <a class="nav-link d-inline mx-2" href="/Home/Index">Home</a>
+        <a class="nav-link d-inline mx-2" href="/Home/About">About</a>
+        <a class="nav-link d-inline mx-2" href="/Home/Education">Education</a>
+        <a class="nav-link d-inline mx-2" href="/Home/Experience">Experience</a>
+        <a class="nav-link d-inline mx-2" href="/Home/Skills">Skills</a>
+        <a class="nav-link d-inline mx-2" href="/Home/TaxCalculator">Tax Calculator</a>
+    </nav>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted text-center mt-5">
+        <div class="container">
+            &copy; 2025 - Jude Amiens OnlineCV App - <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

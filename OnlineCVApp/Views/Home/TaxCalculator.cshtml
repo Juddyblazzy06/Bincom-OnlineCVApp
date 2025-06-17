@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Tax Calculator";
+}
+
+<h2>Income Tax Calculator</h2>
+
+<form asp-action="TaxCalculator" method="post">
+    <label for="income">Enter your annual income:</label>
+    <input type="number" name="income" id="income" step="0.01" required />
+    <button type="submit">Calculate Tax</button>
+</form>
+
+@if (ViewBag.Tax != null)
+{
+    <p><strong>Income:</strong> ₦@ViewBag.Income</p>
+    <p><strong>Tax Payable:</strong> ₦@ViewBag.Tax</p>
+}
+
