@@ -1,0 +1,22 @@
+﻿@model IEnumerable<OnlineCVApp.Models.GalleryImage>
+@{
+    ViewData["Title"] = "Gallery";
+}
+
+<h2>Image Gallery</h2>
+
+@if (Model.Any())
+{
+    <div class="gallery-container">
+        @foreach (var img in Model)
+        {
+            <div class="gallery-item">
+                <img src="@Url.Action("DisplayImage", "Gallery", new { id = img.Id })" alt="@img.FileName" width="200" />
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No images uploaded yet.</p>
+}

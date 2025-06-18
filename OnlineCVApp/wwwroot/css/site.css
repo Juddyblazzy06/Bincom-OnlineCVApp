@@ -81,6 +81,7 @@ button {
     button:hover {
         background-color: #003366;
     }
+
 header h1 {
     margin-top: 30px;
     color: #007bff;
@@ -96,3 +97,14 @@ nav a {
         color: #007bff;
         text-decoration: underline;
     }
+
+.gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.gallery-item {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
