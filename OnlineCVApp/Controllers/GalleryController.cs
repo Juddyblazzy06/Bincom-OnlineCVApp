@@ -1,16 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using OnlineCVApp.Data;
 using OnlineCVApp.Models;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using System.Net.Http.Headers;
+using System.Net;
 
 namespace OnlineCVApp.Controllers
 {
     public class GalleryController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly Cloudinary _cloudinary;
 
-        public GalleryController(ApplicationDbContext context)
+        public GalleryController(ApplicationDbContext context, Cloudinary cloudinary)
         {
             _context = context;
+            _cloudinary = cloudinary;
         }
 
         public IActionResult Index()
@@ -24,16 +30,25 @@ namespace OnlineCVApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile image)
         {
-            if (image != null && image.Length > 0)
-            {
-                using var stream = new MemoryStream();
-                await image.CopyToAsync(stream);
+            if (image == null || image.Length == 0)
+                return BadRequest("No image uploaded");
 
+            var uploadParams = new ImageUploadParams
+            {
+                File = new FileDescription(image.FileName, image.OpenReadStream()),
+                PublicId = $"gallery/{Guid.NewGuid()}"
+            };
+
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+            if (uploadResult != null && uploadResult.StatusCode == HttpStatusCode.OK)
+            {
                 var galleryImage = new GalleryImage
                 {
                     FileName = image.FileName,
                     ContentType = image.ContentType,
-                    ImageData = stream.ToArray()
+                    ImageUrl = uploadResult.Url.ToString(),
+                    PublicId = uploadResult.PublicId
                 };
 
                 _context.GalleryImages.Add(galleryImage);
@@ -49,7 +64,7 @@ namespace OnlineCVApp.Controllers
             if (image == null)
                 return NotFound();
 
-            return File(image.ImageData, image.ContentType);
+            return Redirect(image.ImageUrl);
         }
     }
 }

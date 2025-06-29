@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineCVApp.Models
 {
@@ -7,10 +7,15 @@ namespace OnlineCVApp.Models
         public int Id { get; set; }
 
         [Required]
-        public string? FileName { get; set; }
+        public string FileName { get; set; } = string.Empty;
 
-        public string? ContentType { get; set; }
+        [Required]
+        public string ContentType { get; set; } = string.Empty;
 
-        public byte[] ImageData { get; set; } = null!;
+        [Required]
+        public string ImageUrl { get; set; } = string.Empty;
+
+        [Required]
+        public string PublicId { get; set; } = string.Empty;
     }
 }

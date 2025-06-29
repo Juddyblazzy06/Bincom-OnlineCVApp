@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineCVApp.Data;
+using CloudinaryDotNet;
 
 namespace OnlineCVApp
 {
@@ -13,6 +14,16 @@ namespace OnlineCVApp
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Configure Cloudinary
+            var cloudinarySettings = builder.Configuration.GetSection("CloudinarySettings");
+            var account = new Account(
+                cloudinarySettings["CloudName"],
+                cloudinarySettings["ApiKey"],
+                cloudinarySettings["ApiSecret"]
+            );
+            var cloudinary = new Cloudinary(account);
+            builder.Services.AddSingleton(cloudinary);
 
 
             var app = builder.Build();
