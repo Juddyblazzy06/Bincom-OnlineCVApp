@@ -17,5 +17,8 @@ namespace OnlineCVApp.Models
 
         [Required]
         public string PublicId { get; set; } = string.Empty;
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
     }
 }
